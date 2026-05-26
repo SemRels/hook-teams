@@ -83,7 +83,9 @@ func (n *TeamsNotifier) Notify(ctx context.Context, version, changelog string) e
 	if err != nil {
 		return fmt.Errorf("teams: send notification: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
 		return fmt.Errorf("teams: unexpected status %d", resp.StatusCode)

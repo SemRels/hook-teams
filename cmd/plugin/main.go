@@ -24,12 +24,12 @@ var newNotifier = func(cfg plugin.TeamsConfig) notifier {
 func run(ctx context.Context, getenv func(string) string, stderr io.Writer) int {
 	webhookURL := getenv("SEMREL_PLUGIN_WEBHOOK_URL")
 	if webhookURL == "" {
-		fmt.Fprintln(stderr, "hook-teams: SEMREL_PLUGIN_WEBHOOK_URL is required")
+		_, _ = fmt.Fprintln(stderr, "hook-teams: SEMREL_PLUGIN_WEBHOOK_URL is required")
 		return 1
 	}
 	version := firstNonEmpty(getenv("SEMREL_VERSION"), getenv("SEMREL_TAG_NAME"), getenv("SEMREL_NEXT_VERSION"))
 	if version == "" {
-		fmt.Fprintln(stderr, "hook-teams: SEMREL_VERSION, SEMREL_TAG_NAME, or SEMREL_NEXT_VERSION is required")
+		_, _ = fmt.Fprintln(stderr, "hook-teams: SEMREL_VERSION, SEMREL_TAG_NAME, or SEMREL_NEXT_VERSION is required")
 		return 1
 	}
 	if getenv("SEMREL_DRY_RUN") == "true" {
@@ -45,7 +45,7 @@ func run(ctx context.Context, getenv func(string) string, stderr io.Writer) int 
 	}
 
 	if err := newNotifier(cfg).Notify(ctx, version, getenv("SEMREL_CHANGELOG")); err != nil {
-		fmt.Fprintln(stderr, "hook-teams:", err)
+		_, _ = fmt.Fprintln(stderr, "hook-teams:", err)
 		return 1
 	}
 	return 0
