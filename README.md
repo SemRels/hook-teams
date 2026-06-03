@@ -12,6 +12,8 @@ plugins:
       title: "🚀 New Release"        # optional
       theme_color: "0078D7"           # optional, hex without #
       mention: "user@example.com"     # optional, Teams user to @mention
+      max_retries: "3"                # optional
+      retry_delay: "2s"               # optional
 ```
 
 ## Environment Variables
@@ -22,6 +24,12 @@ plugins:
 | `SEMREL_PLUGIN_TITLE` | ❌ | Notification title (default: "🚀 New Release") |
 | `SEMREL_PLUGIN_THEME_COLOR` | ❌ | Card theme color hex (default: `0078D7`) |
 | `SEMREL_PLUGIN_MENTION` | ❌ | Teams user email to @mention |
+| `SEMREL_PLUGIN_MAX_RETRIES` | ❌ | Retries on transient network failures and HTTP 5xx responses (default: `3`) |
+| `SEMREL_PLUGIN_RETRY_DELAY` | ❌ | Delay between retry attempts (default: `2s`) |
+
+## Retry behavior
+
+The plugin retries transient failures caused by network errors or HTTP `5xx` responses. HTTP `2xx` and `4xx` responses are not retried. Each retry attempt is logged to standard error.
 
 ## Getting a Webhook URL
 

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// SPDX-FileCopyrightText: 2026 The hook-teams Authors
+// SPDX-FileCopyrightText: 2026 The semrel Authors
 
 package main
 
@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"time"
 
 	plugin "github.com/SemRels/hook-teams/internal/plugin"
@@ -37,11 +38,24 @@ func run(ctx context.Context, getenv func(string) string, stderr io.Writer) int 
 		return 0
 	}
 
+	maxRetries, err := parseMaxRetries(getenv("SEMREL_PLUGIN_MAX_RETRIES"))
+	if err != nil {
+		_, _ = fmt.Fprintln(stderr, "hook-teams:", err)
+		return 1
+	}
+	retryDelay, err := parseRetryDelay(getenv("SEMREL_PLUGIN_RETRY_DELAY"))
+	if err != nil {
+		_, _ = fmt.Fprintln(stderr, "hook-teams:", err)
+		return 1
+	}
+
 	cfg := plugin.TeamsConfig{
 		WebhookURL: webhookURL,
 		Title:      getenv("SEMREL_PLUGIN_TITLE"),
 		ThemeColor: getenv("SEMREL_PLUGIN_THEME_COLOR"),
 		Mention:    getenv("SEMREL_PLUGIN_MENTION"),
+		MaxRetries: maxRetries,
+		RetryDelay: retryDelay,
 	}
 
 	if err := newNotifier(cfg).Notify(ctx, version, getenv("SEMREL_CHANGELOG")); err != nil {
@@ -64,4 +78,26 @@ func firstNonEmpty(values ...string) string {
 		}
 	}
 	return ""
+}
+
+func parseMaxRetries(value string) (int, error) {
+	if value == "" {
+		return plugin.DefaultMaxRetries, nil
+	}
+	maxRetries, err := strconv.Atoi(value)
+	if err != nil || maxRetries < 0 {
+		return 0, fmt.Errorf("SEMREL_PLUGIN_MAX_RETRIES must be a non-negative integer")
+	}
+	return maxRetries, nil
+}
+
+func parseRetryDelay(value string) (time.Duration, error) {
+	if value == "" {
+		return plugin.DefaultRetryDelay, nil
+	}
+	delay, err := time.ParseDuration(value)
+	if err != nil || delay < 0 {
+		return 0, fmt.Errorf("SEMREL_PLUGIN_RETRY_DELAY must be a non-negative duration")
+	}
+	return delay, nil
 }

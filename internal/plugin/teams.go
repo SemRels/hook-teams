@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// SPDX-FileCopyrightText: 2026 The hook-teams Authors
+// SPDX-FileCopyrightText: 2026 The semrel Authors
 
 package plugin
 
@@ -20,6 +20,8 @@ type TeamsConfig struct {
 	Title      string
 	ThemeColor string
 	Mention    string
+	MaxRetries int
+	RetryDelay time.Duration
 }
 
 type TeamsNotifier struct {
@@ -33,6 +35,12 @@ func NewTeamsNotifier(cfg TeamsConfig) *TeamsNotifier {
 	}
 	if cfg.ThemeColor == "" {
 		cfg.ThemeColor = "0078D7"
+	}
+	if cfg.MaxRetries == 0 {
+		cfg.MaxRetries = DefaultMaxRetries
+	}
+	if cfg.RetryDelay == 0 {
+		cfg.RetryDelay = DefaultRetryDelay
 	}
 	cfg.ThemeColor = strings.TrimPrefix(cfg.ThemeColor, "#")
 
@@ -73,13 +81,14 @@ func (n *TeamsNotifier) Notify(ctx context.Context, version, changelog string) e
 		return fmt.Errorf("teams: marshal payload: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, n.cfg.WebhookURL, bytes.NewReader(body))
-	if err != nil {
-		return fmt.Errorf("teams: create request: %w", err)
-	}
-	req.Header.Set("Content-Type", "application/json")
-
-	resp, err := n.client.Do(req)
+	resp, err := retryDo(ctx, n.cfg.MaxRetries, n.cfg.RetryDelay, func() (*http.Response, error) {
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, n.cfg.WebhookURL, bytes.NewReader(body))
+		if err != nil {
+			return nil, fmt.Errorf("teams: create request: %w", err)
+		}
+		req.Header.Set("Content-Type", "application/json")
+		return n.client.Do(req)
+	})
 	if err != nil {
 		return fmt.Errorf("teams: send notification: %w", err)
 	}
