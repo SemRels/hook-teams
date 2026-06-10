@@ -91,8 +91,8 @@ jobs:
         if: steps.semrel.outputs.released == 'true'
         run: |
           TAG="${{ steps.semrel.outputs.tag }}"
-          echo "Triggering release.yml for tag $TAG"
-          gh workflow run release.yml --ref "$TAG" --repo "${{ github.repository }}"
+          echo "Triggering release.yaml for tag $TAG"
+          gh workflow run release.yaml --ref "$TAG" --repo "${{ github.repository }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
