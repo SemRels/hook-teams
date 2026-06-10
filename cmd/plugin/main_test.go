@@ -50,7 +50,7 @@ func TestRunSuccess(t *testing.T) {
 	}), stderr)
 
 	require.Equal(t, 0, exitCode)
-	require.Empty(t, stderr.String())
+	require.Equal(t, "plugin_schema_version=1\n", stderr.String())
 	require.True(t, stub.called)
 	require.Equal(t, "v1.2.3", stub.version)
 	require.Equal(t, "- feature", stub.changelog)
@@ -76,7 +76,7 @@ func TestRunDryRun(t *testing.T) {
 			"SEMREL_DRY_RUN":            "true",
 		}), stderr)
 		require.Equal(t, 0, exitCode)
-		require.Empty(t, stderr.String())
+		require.Equal(t, "plugin_schema_version=1\n", stderr.String())
 	})
 
 	require.False(t, stub.called)

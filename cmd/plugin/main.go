@@ -14,6 +14,8 @@ import (
 	plugin "github.com/SemRels/hook-teams/internal/plugin"
 )
 
+const pluginSchemaVersion = 1
+
 type notifier interface {
 	Notify(context.Context, string, string) error
 }
@@ -23,6 +25,7 @@ var newNotifier = func(cfg plugin.TeamsConfig) notifier {
 }
 
 func run(ctx context.Context, getenv func(string) string, stderr io.Writer) int {
+	fmt.Fprintf(stderr, "plugin_schema_version=%d\n", pluginSchemaVersion)
 	webhookURL := getenv("SEMREL_PLUGIN_WEBHOOK_URL")
 	if webhookURL == "" {
 		_, _ = fmt.Fprintln(stderr, "hook-teams: SEMREL_PLUGIN_WEBHOOK_URL is required")
