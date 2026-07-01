@@ -1,5 +1,7 @@
 # hook-teams
 
+[![Latest Release](https://img.shields.io/github/v/release/SemRels/hook-teams?label=version\&color=blue)](https://github.com/SemRels/hook-teams/releases/latest)
+
 A [semrel](https://semrel.dev) plugin that sends release notifications to Microsoft Teams via Incoming Webhooks.
 
 ## Usage
