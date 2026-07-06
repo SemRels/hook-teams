@@ -2,38 +2,43 @@
 
 ## Overview
 
-SemRels hook-teams is an open source project governed by its maintainers and community contributors. It exists to distribute consistent governance, community health, and REUSE-compliance files across SemRels repositories.
-
-## Scope
-
-This governance applies to the template content, workflow examples, and supporting setup documentation in this repository.
+{{PROJECT_NAME}} is an open source project governed by its maintainers and community contributors. This document describes how decisions are made and how to participate.
 
 ## Project Roles
 
 ### Contributor
-Anyone who opens an issue, submits a PR, improves documentation or participates in discussions. No formal process required — just follow the contribution guidelines and the [Code of Conduct](CODE_OF_CONDUCT.md).
+Anyone who opens an issue, submits a PR, improves documentation, or participates in discussions. No formal process is required beyond following [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ### Reviewer
-An experienced contributor who has demonstrated good judgement and is trusted to review PRs in a specific area. Reviewers can approve PRs but cannot merge without a Maintainer approval.
+An experienced contributor trusted to review changes in a specific area. Reviewers can approve changes but should not merge without maintainer approval unless the repo explicitly grants that permission.
 
 ### Maintainer
-Maintainers have merge rights and are responsible for the overall project health. The current list of maintainers is in [MAINTAINERS.md](MAINTAINERS.md).
+Maintainers have merge rights and are responsible for the overall health of the repository. The current list of maintainers is in [MAINTAINERS.md](MAINTAINERS.md).
 
 **To become a Maintainer:**
-1. Have a track record of quality contributions (code, docs, community) over at least 3 months
-2. Be nominated by an existing Maintainer
-3. Receive approval from 2/3 of current Maintainers (lazy consensus over 7 days)
-4. Be added to MAINTAINERS.md and CODEOWNERS via a PR
+1. Have a track record of quality contributions over a sustained period
+2. Be nominated by an existing maintainer
+3. Receive approval from at least 2/3 of current maintainers using lazy consensus over 7 days
+4. Be added to `MAINTAINERS.md` and `CODEOWNERS` via pull request
 
 **Stepping down / Emeritus:**
-Maintainers who are no longer active should move to Emeritus status by opening a PR to update MAINTAINERS.md.
+Inactive maintainers should move to emeritus status through a pull request that updates [MAINTAINERS.md](MAINTAINERS.md).
 
 ## Decision Making
 
-We use **lazy consensus**: a proposed change is accepted unless a Maintainer explicitly objects within 7 days. For significant architectural decisions, open a GitHub Discussion or Issue first.
+Default decision making uses **lazy consensus**: a proposed change is accepted unless a maintainer objects within 7 days.
 
-**Voting** (if lazy consensus fails): simple majority of active Maintainers. Each Maintainer has one vote. Votes are recorded in the relevant GitHub Issue or Discussion.
+For significant architectural, governance, or ecosystem decisions, open an issue or discussion first and document the outcome in the repository.
+
+If consensus cannot be reached, active maintainers vote. Each maintainer has one vote and a simple majority decides.
+
+## Scope By Repository Type
+
+- **Type A / Core:** full governance applies, including architecture and release policy decisions
+- **Type B / Plugin Collection:** governance applies to plugin quality gates, release expectations, and compatibility policy
+- **Type C / Single Plugin:** maintainers may simplify process, but ownership and decision rules should remain documented
+- **Type D / Documentation:** governance can stay lightweight, but maintainers, review expectations, and change process should still be explicit
 
 ## Changes to Governance
 
-Changes to this document require a PR approved by 2/3 of current Maintainers.
+Changes to this document require maintainer approval and should not be merged unilaterally by the proposing author.
