@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://registry.semrel.io/schemas/plugins/hook-teams/v1.json",
+  "$id": "https://registry.semrel.io/schemas/plugins/teams/v1.json",
   "title": "hook-teams plugin configuration",
   "description": "Schema v1 for the hook-teams semrel plugin. Configure via SEMREL_* environment variables.",
   "type": "object",
