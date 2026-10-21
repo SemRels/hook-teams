@@ -12,7 +12,8 @@ A [semrel](https://semrel.dev) plugin that sends release notifications to Micros
 
 ```yaml
 plugins:
-  - uses: hook-teams
+  - uses: "@semrel/hook-teams"
+    phase: release
     args:
       webhook_url: "https://your-tenant.webhook.office.com/webhookb2/..."
       title: "🚀 New Release"        # optional
@@ -24,14 +25,14 @@ plugins:
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SEMREL_PLUGIN_WEBHOOK_URL` | ✅ | Teams Incoming Webhook URL |
-| `SEMREL_PLUGIN_TITLE` | ❌ | Notification title (default: "🚀 New Release") |
-| `SEMREL_PLUGIN_THEME_COLOR` | ❌ | Card theme color hex (default: `0078D7`) |
-| `SEMREL_PLUGIN_MENTION` | ❌ | Teams user email to @mention |
-| `SEMREL_PLUGIN_MAX_RETRIES` | ❌ | Retries on transient network failures and HTTP 5xx responses (default: `3`) |
-| `SEMREL_PLUGIN_RETRY_DELAY` | ❌ | Delay between retry attempts (default: `2s`) |
+| Argument | Environment variable | Required | Description |
+| --- | --- | --- | --- |
+| `webhook_url` | `SEMREL_PLUGIN_WEBHOOK_URL` | ✅ | Teams Incoming Webhook URL |
+| `title` | `SEMREL_PLUGIN_TITLE` | ❌ | Notification title (default: "🚀 New Release") |
+| `theme_color` | `SEMREL_PLUGIN_THEME_COLOR` | ❌ | Card theme color hex (default: `0078D7`) |
+| `mention` | `SEMREL_PLUGIN_MENTION` | ❌ | Teams user email to @mention |
+| `max_retries` | `SEMREL_PLUGIN_MAX_RETRIES` | ❌ | Retries on transient network failures and HTTP 5xx responses (default: `3`) |
+| `retry_delay` | `SEMREL_PLUGIN_RETRY_DELAY` | ❌ | Delay between retry attempts (default: `2s`) |
 
 ## Retry behavior
 
