@@ -1,6 +1,10 @@
 # hook-teams
 
 [![Latest Release](https://img.shields.io/github/v/release/SemRels/hook-teams?label=version&color=blue)](https://github.com/SemRels/hook-teams/releases/latest)
+[![CI](https://github.com/SemRels/hook-teams/actions/workflows/ci.yml/badge.svg)](https://github.com/SemRels/hook-teams/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/SemRels/hook-teams)](LICENSE)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/SemRels/hook-teams/badge)](https://scorecard.dev/viewer/?uri=github.com/SemRels/hook-teams)
+[![REUSE status](https://api.reuse.software/badge/github.com/SemRels/hook-teams)](https://api.reuse.software/info/github.com/SemRels/hook-teams)
 
 A [semrel](https://semrel.dev) plugin that sends release notifications to Microsoft Teams via Incoming Webhooks.
 
